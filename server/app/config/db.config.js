@@ -1,3 +1,5 @@
+
+console.log("🚀 ~ file: db.config.js ~ line 4 ~ process.env.DB_HOST", process.env.DB_HOST)
 module.exports = {
     HOST: process.env.DB_HOST,
     USER: process.env.DB_USER,

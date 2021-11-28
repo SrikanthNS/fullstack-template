@@ -15,10 +15,10 @@ services:
     networks:
       - backend
 
-  krmn-api:
+  api:
     depends_on:
       - mysqldb
-    build: ./krmn-api
+    build: ./server
     restart: unless-stopped
     env_file: ./.env
     ports:
@@ -34,11 +34,11 @@ services:
       - backend
       - frontend
 
-  krmn-ui:
+  ui:
     depends_on:
-      - krmn-api
+      - api
     build:
-      context: ./krmn-ui
+      context: ./client
       args:
         - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
