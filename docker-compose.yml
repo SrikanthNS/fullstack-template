@@ -1,10 +1,22 @@
 version: "3.8"
 
 services:
+  ui:
+    build:
+      context: ./client
+      args:
+        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+    networks:
+      - frontend
+
   mysqldb:
     image: mysql:5.7
     restart: unless-stopped
     env_file: ./.env
+    depends_on:
+      - ui
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
@@ -32,18 +44,6 @@ services:
       - CLIENT_ORIGIN=$CLIENT_ORIGIN
     networks:
       - backend
-      - frontend
-
-  ui:
-    depends_on:
-      - api
-    build:
-      context: ./client
-      args:
-        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
-    ports:
-      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
-    networks:
       - frontend
 
 volumes:
