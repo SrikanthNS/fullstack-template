@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./app/models");
 const Role = db.role;
 
+
 db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
     initial();
@@ -46,6 +47,7 @@ function initial() {
         name: "admin"
     });
 }
+
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
